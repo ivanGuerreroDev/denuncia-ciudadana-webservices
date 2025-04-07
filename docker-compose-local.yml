@@ -6,7 +6,7 @@ services:
       context: .
       args:
         - APP_ENV
-    command: npm run start:prod
+    command: npm run start:dev
     ports:
       - 3000:3000
     volumes:
@@ -25,6 +25,27 @@ services:
       JWT_PUBLIC_KEY_BASE64: ${JWT_PUBLIC_KEY_BASE64}
       JWT_PRIVATE_KEY_BASE64: ${JWT_PRIVATE_KEY_BASE64}
       DEFAULT_ADMIN_USER_PASSWORD: ${DEFAULT_ADMIN_USER_PASSWORD}
+    depends_on:
+      - pgsqldb
+
+  pgsqldb:
+    image: postgres:16.3
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+      POSTGRES_DB: "${DB_NAME}"
+    ports:
+      - 5432:5432
+    volumes:
+      - pgsqldata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - pgsqldb
 
 volumes:
   node_modules:
+  pgsqldata:
