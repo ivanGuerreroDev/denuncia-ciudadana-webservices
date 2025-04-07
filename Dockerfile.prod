@@ -36,7 +36,7 @@ ENV NODE_ENV=${APP_ENV}
 EXPOSE 80
 
 # Use a non-root user for security
-USER node
+# USER node
 
 # Set the default command to run the application
 CMD [ "npm", "run", "start:prod" ]
