@@ -27,6 +27,9 @@ import { AppLoggerModule } from './logger/logger.module';
         timezone: 'Z',
         synchronize: false,
         debug: configService.get<string>('env') === 'development',
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
     }),
     AppLoggerModule,
