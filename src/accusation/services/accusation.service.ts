@@ -37,12 +37,11 @@ export class AccusationService {
     const accusationType = await this.accusationTypeRepository.getById(input.accusationTypeId);
     accusation.accusationType = accusationType;
 
-    // Set user
-    if (!ctx.user) {
-      throw new UnauthorizedException('User not authenticated');
+    // Set user if authenticated
+    if (ctx.user) {
+      const user = await this.userService.getUserById(ctx, ctx.user.id);
+      accusation.user = plainToClass(User, user);
     }
-    const user = await this.userService.getUserById(ctx, ctx.user.id);
-    accusation.user = plainToClass(User, user);
 
     // Save accusation first to get ID
     await this.repository.save(accusation);
@@ -126,7 +125,8 @@ export class AccusationService {
     const accusation = await this.repository.getById(id);
 
     // Check if user is authorized (only the creator can update)
-    if (!ctx.user || accusation.user.id !== ctx.user.id) {
+    // If accusation has a user assigned, verify current user is the creator
+    if (accusation.user && (!ctx.user || accusation.user.id !== ctx.user.id)) {
       throw new UnauthorizedException('You are not authorized to update this accusation');
     }
 

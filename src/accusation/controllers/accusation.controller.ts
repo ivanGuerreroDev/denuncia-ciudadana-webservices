@@ -52,8 +52,6 @@ export class AccusationController {
     type: SwaggerBaseApiResponse(AccusationOutput),
   })
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   async createAccusation(
     @ReqContext() ctx: RequestContext,
     @Body() input: CreateAccusationInput,
@@ -120,8 +118,6 @@ export class AccusationController {
     type: BaseApiErrorResponse,
   })
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   async getAccusation(
     @ReqContext() ctx: RequestContext,
     @Param('id') id: number,
@@ -145,8 +141,6 @@ export class AccusationController {
     type: BaseApiErrorResponse,
   })
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   async updateAccusation(
     @ReqContext() ctx: RequestContext,
     @Param('id') accusationId: number,

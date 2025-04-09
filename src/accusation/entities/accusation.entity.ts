@@ -25,6 +25,7 @@ export class Accusation {
 
   @ManyToOne(() => User, {
     eager: true,
+    nullable: true,
   })
   user: User;
 
