@@ -63,7 +63,7 @@ export class FileUploadController {
     }
     const input:UpdateAccusationInput = {
       accusationTypeId: accusationData.accusation.accusationType.id,
-      accusationData:[fileData]
+      accusationData:[...accusationData.accusation.accusationData ,fileData]
     };
     await this.accusationService.updateAccusation(
       ctx,
