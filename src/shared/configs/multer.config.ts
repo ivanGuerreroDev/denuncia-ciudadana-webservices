@@ -22,6 +22,7 @@ export const multerConfig = {
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'video/3gpp',
+      'audio/3gpp',
       'audio/mpeg',
       'video/mp4',
     ];
