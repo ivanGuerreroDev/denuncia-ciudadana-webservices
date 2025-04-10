@@ -21,6 +21,9 @@ export const multerConfig = {
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'video/3gpp',
+      'audio/mpeg',
+      'video/mp4',
     ];
     
     if (allowedMimeTypes.includes(file.mimetype)) {
