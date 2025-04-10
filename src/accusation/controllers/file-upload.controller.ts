@@ -20,6 +20,8 @@ import { AppLogger } from '../../shared/logger/logger.service';
 import { ReqContext } from '../../shared/request-context/req-context.decorator';
 import { RequestContext } from '../../shared/request-context/request-context.dto';
 import { AccusationDataOutput } from '../dtos/accusation-data-output.dto';
+import { AccusationDataInput,UpdateAccusationInput } from '../dtos/accusation-input.dto';
+import { AccusationService } from '../services/accusation.service';
 import { FileUploadService } from '../services/file-upload.service';
 
 @ApiTags('accusations')
@@ -27,6 +29,7 @@ import { FileUploadService } from '../services/file-upload.service';
 export class FileUploadController {
   constructor(
     private readonly fileUploadService: FileUploadService,
+    private readonly accusationService: AccusationService,
     private readonly logger: AppLogger,
   ) {
     this.logger.setContext(FileUploadController.name);
@@ -53,6 +56,19 @@ export class FileUploadController {
       ctx,
       accusationId,
       file,
+    );
+    const fileData: AccusationDataInput = {
+      key: accusationData.key,
+      value: accusationData.value,
+    }
+    const input:UpdateAccusationInput = {
+      accusationTypeId: accusationData.accusation.accusationType.id,
+      accusationData:[fileData]
+    };
+    await this.accusationService.updateAccusation(
+      ctx,
+      accusationId,
+      input,
     );
 
     return {
