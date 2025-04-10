@@ -5,19 +5,16 @@ import {
   ParseIntPipe,
   Post,
   UploadedFile,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
-  ApiBearerAuth,
   ApiConsumes,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BaseApiResponse, SwaggerBaseApiResponse } from '../../shared/dtos/base-api-response.dto';
 import { AppLogger } from '../../shared/logger/logger.service';
 import { ReqContext } from '../../shared/request-context/req-context.decorator';
@@ -44,8 +41,6 @@ export class FileUploadController {
     type: SwaggerBaseApiResponse(AccusationDataOutput),
   })
   @ApiConsumes('multipart/form-data')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @ReqContext() ctx: RequestContext,
